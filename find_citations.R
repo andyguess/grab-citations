@@ -1,12 +1,14 @@
 if(!("gdata" %in% rownames(installed.packages()))) install.packages("gdata", dependencies = TRUE)
 library(gdata) # trim()
 
-setwd("~/Documents/Columbia/Dissertation/deposit/Chapter2") # set your directory
-ch2 <- readLines("Chapter2.tex", warn = FALSE)
-head(ch2)
+## Read file
 
-grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", ch2) # Which lines have citations?
-length(grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", ch2)) # How many lines?
+setwd("~/Documents/Columbia/Dissertation/deposit/Chapter2") # set your directory
+tex_file <- readLines("Chapter2.tex", warn = FALSE)
+head(tex_file)
+
+grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file) # Which lines have citations?
+length(grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file)) # How many lines?
 
 # function to split out multiple citations in the same line
 split_cite <- function(c) {
@@ -20,7 +22,7 @@ split_cite <- function(c) {
 }
 
 # grab lines with citations (assume \cite names don't start with a #):
-cites <- ch2[grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", ch2)]
+cites <- tex_file[grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file)]
 
 # run the split_cite() function on each line:
 cites <- as.vector(unlist(sapply(cites, split_cite)))
@@ -38,7 +40,7 @@ cites <- unique(trim(unlist(strsplit(cites, ","))))
 # take out lines that are not citations (e.g. \ref{})
 #cites <- cites[!1:length(cites) %in% c(38, 40:42)] # edit this line
 
-## now check master BibTeX file
+## Now check master BibTeX file
 
 bib <- readLines("../Master.bib", warn = FALSE)
 
