@@ -1,6 +1,6 @@
 # grab-citations
 
-Searches .tex file for BibTeX citation names (in \cite?[]{} commands), then spits out list.
+Searches .tex file for BibTeX citation names (in \cite?[]{} commands), then spits out list of those missing from a master .bib file. Easily adapted to just list all cites.
 
 ## Setup
 
@@ -20,7 +20,7 @@ grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file) # Which lines have cit
 length(grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file)) # How many lines?
 ```
 
-### Run function
+## Run function
 
 ```{r}
 source("grab_citations.R")
