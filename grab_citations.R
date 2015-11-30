@@ -1,16 +1,6 @@
 if(!("gdata" %in% rownames(installed.packages()))) install.packages("gdata", dependencies = TRUE)
 library(gdata) # trim()
 
-## Read file
-
-setwd("~/Documents/Columbia/Dissertation/deposit/Chapter2") # set your directory
-tex_file <- readLines("Chapter2.tex", warn = FALSE)
-bib <- readLines("../Master.bib", warn = FALSE) # master BibTeX file
-head(tex_file)
-
-grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file) # Which lines have citations?
-length(grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file)) # How many lines?
-
 ## Function to split out multiple citations in the same line
 
 split_cite <- function(c) {
@@ -22,6 +12,8 @@ split_cite <- function(c) {
   }
   return(tmp[[1]])
 }
+
+## Function to grab \cite refs in given .tex file and spit out in the ones missing from a .bib file
 
 grab_citations <- function(tex, master_bib) {
   
@@ -44,7 +36,7 @@ grab_citations <- function(tex, master_bib) {
   # take out lines that are not citations (e.g. \ref{}):
   #cites <- cites[!1:length(cites) %in% c(38, 40:42)] # edit this line
   
-  # index of citation(s) missing from .bib file
-  return(which(!sapply(1:length(cites), function(c) sum(grep(cites[c], master_bib, fixed = TRUE)) > 0)))
+  # citation(s) missing from .bib file
+  return(cites[which(!sapply(1:length(cites), function(c) sum(grep(cites[c], master_bib, fixed = TRUE)) > 0))])
   
 }
