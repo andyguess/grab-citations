@@ -23,5 +23,6 @@ length(grep("\\cite[[:lower:]]*[[:punct:][:digit:]]+", tex_file)) # How many lin
 ### Run function
 
 ```{r}
+source("grab_citations.R")
 grab_citations(tex_file, bib)
 ```
